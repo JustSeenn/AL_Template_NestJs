@@ -22,7 +22,7 @@ export class ClientService {
   }
 
   findOne(id: number) {
-    return this.clientRepository.findBy({ id });
+    return this.clientRepository.findOneBy({ id });
   }
 
   update(id: number, updateClientDto: UpdateClientDto) {
