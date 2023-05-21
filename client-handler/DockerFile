@@ -1,0 +1,26 @@
+FROM node:18-alpine as builder
+
+WORKDIR /src
+
+COPY package.json ./
+COPY package-lock.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# Étape 2 : Exécution de l'application
+FROM node:18-alpine
+
+WORKDIR /src
+
+COPY package.json ./
+COPY package-lock.json ./
+
+RUN npm install
+
+COPY --from=builder /src/dist ./dist
+
+CMD [ "node", "dist/main" ]
